@@ -5,4 +5,11 @@
 	<Button
 			text="Say Hello"
 			press=".onShowHello"/>
+	<!-- {...}:the data is taken front the recipient's object name property
+	/recipient/name :: declares the path in the model -->
+	<Input
+	value="{/recipient/name}"
+	description="Hello {/recipient/name}"
+	valueLiveUpdate="true"
+	width="60%"/>
 </mvc:View>
