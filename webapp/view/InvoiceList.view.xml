@@ -3,10 +3,15 @@
 		xmlns="sap.m"
 		xmlns:mvc="sap.ui.core.mvc">
 	<List
-			id="invoiceList"
-			class="sapUiResponsiveMargin"
-			width="auto"
-			items="{invoice>/Invoices}">
+		id="invoiceList"
+		class="sapUiResponsiveMargin"
+		width="auto"
+		items="{
+			path : 'invoice>/Invoices',
+         	sorter : {
+            	path : 'ProductName'
+         	}
+         }">
 		<headerToolbar>
 			<Toolbar>
 				<Title text="{i18n>invoiceListTitle}"/>
