@@ -17,6 +17,13 @@
 			<Toolbar>
 				<Title text="{i18n>invoiceListTitle}"/>
 				<ToolbarSpacer/>
+				<Button
+						id="alertButton"
+						icon="sap-icon://alert"
+						text="{i18n>openAlertButtonText}"
+						press=".onOpenAlert"
+						class="sapUiSmallMarginEnd"/>
+				<ToolbarSpacer/>
 				<SearchField width="50%" search=".onFilterInvoices"/>
 			</Toolbar>
 		</headerToolbar>
@@ -24,13 +31,13 @@
 			<ObjectListItem
 					title="{invoice>Quantity} x {invoice>ProductName}"
 					number="{
-						parts: [{path: 'invoice>ExtendedPrice'}, {path: 'view>/currency'}],
+						parts: [{path: 'invoice>ExtendedPrice'}, {path: 'invoice>/Currency'}],
 						type: 'sap.ui.model.type.Currency',
 						formatOptions: {
-								showMeasure: false
+								showMeasure: true
 						}
 					}"
-					numberUnit="{view>/currency}"
+					numberUnit="{invoice>Currency}"
 					numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : 'Success'}">
 				<firstStatus>
 					<ObjectStatus text="{
