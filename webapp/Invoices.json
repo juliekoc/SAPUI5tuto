@@ -89,6 +89,15 @@
 		  "ShipperName": "Fun Inc.",
 		  "ShippedDate": "2015-01-27T00:00:00",
 		  "Status": "A"
+	  },
+	  {
+		  "ProductName": "Milk",
+		  "Quantity": 5,
+		  "ExtendedPrice": 12,
+		  "Currency": "EUR",
+		  "ShipperName": "Fun Inc.",
+		  "ShippedDate": "2015-02-18T00:00:00",
+		  "Status": "C"
 	  }
   ]
 }
