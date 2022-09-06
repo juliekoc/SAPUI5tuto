@@ -85,15 +85,9 @@ sap.ui.define([
              			this.oDefaultDialog.open();
              		},
 
-		onCloseAlert : function () {
-        	// note: We don't need to chain to the pDialog promise, since this event-handler
-        	// is only called from within the loaded dialog itself.
-        		this.byId("alertDialog").close();
-        },
-
         onFilterInvoices : function (oEvent) {
 
-            // build filter array
+            // build filter array from tutorial
         	/*var aFilter = [];
             var sQuery = oEvent.getParameter("query");
          	if (sQuery) {
