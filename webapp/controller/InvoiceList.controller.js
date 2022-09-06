@@ -1,12 +1,23 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/Fragment",
 	"../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, Fragment, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/library",
+    "sap/m/List",
+    "sap/m/StandardListItem",
+    "sap/m/Text"
+], function (Controller, formatter, Filter, FilterOperator, Dialog, Button, mobileLibrary, List, StandardListItem, Text) {
 	"use strict";
-	var self;
+	//var self;
+
+	// shortcut for sap.m.ButtonType
+    var ButtonType = mobileLibrary.ButtonType;
+
+    // shortcut for sap.m.DialogType
+    var DialogType = mobileLibrary.DialogType;
 
 	return Controller.extend("sap.ui.demo.walkthrough.controller.InvoiceList", {
 		formatter: formatter,
@@ -32,40 +43,80 @@ sap.ui.define([
            var oModel =  new JSONModel(oData);
            this.getView().setModel(oModel, "range");
 		},*/
-		onOpenAlert : function () {
-             //recuperer Dialog avec byId et rajouter le truc dans le content
-             //addContent en passant en param le nom de la table que je veux afficher
-			// create dialog lazily
-			if (!this.pDialog) {
-				this.pDialog = this.loadFragment({
-					name: "sap.ui.demo.walkthrough.view.AlertDialog"
-				});
-			}
-			this.pDialog.then(function(oDialog) {
-				oDialog.open();
-			});
 
-			let myAlert = this.byId("alertDialog");
-			myAlert.addContent("alertTable");
-		},
+        /*onInit: function () {
+        	var oModel = new JSONModel("invoice");
+        	this.getView().setModel(oModel);
+        },*/
+		onOpenAlert : function () {
+             if (!this.oDefaultDialog) {
+             	this.oDefaultDialog = new Dialog({
+             		title: "Invoices higher than 50 EUR",
+             		content: new List({
+             				items: {
+             					path: 'invoice>/Invoices',
+                                formatter: function (value) {
+                                      value : "{invoice>ExtendedPrice}";
+                                      if (value>50) {
+                                          return true;
+                                      }
+                                          return false;
+                                },
+             					template: new StandardListItem({
+             							title: "{invoice>Quantity} x {invoice>ProductName}",
+             							info: "{invoice>ExtendedPrice} {invoice>Currency}",
+             							})
+             						}
+             					}),
+             					beginButton: new Button({
+             						type: ButtonType.Emphasized,
+             						text: "OK",
+             						press: function () {
+             							this.oDefaultDialog.close();
+             						}.bind(this)
+             					}),
+
+             				});
+
+             				// to get access to the controller's model
+             				this.getView().addDependent(this.oDefaultDialog);
+             			}
+
+             			this.oDefaultDialog.open();
+             		},
+
 		onCloseAlert : function () {
         	// note: We don't need to chain to the pDialog promise, since this event-handler
         	// is only called from within the loaded dialog itself.
         		this.byId("alertDialog").close();
         },
-         		onFilterInvoices : function (oEvent) {
 
-         			// build filter array
-         			var aFilter = [];
-         			var sQuery = oEvent.getParameter("query");
-         			if (sQuery) {
-         				aFilter.push(new Filter("Currency", FilterOperator.Contains, sQuery));
-         			}
-         			// filter binding
-         			var oList = this.byId("invoiceList");
-         			var oBinding = oList.getBinding("items");
-         			oBinding.filter(aFilter);
-         		}
-         	});
+        onFilterInvoices : function (oEvent) {
 
-	});
+            // build filter array
+        	/*var aFilter = [];
+            var sQuery = oEvent.getParameter("query");
+         	if (sQuery) {
+         		aFilter.push(new Filter("Currency", FilterOperator.Contains, sQuery));
+         	}*/
+         	var sQuery = oEvent.getSource().getValue();
+
+            var oFilter = new sap.ui.model.Filter({
+
+                filters: [
+
+                  new sap.ui.model.Filter("Currency", FilterOperator.Contains, sQuery),
+                  new sap.ui.model.Filter("ProductName", FilterOperator.Contains, sQuery)
+
+                ],
+                and: false
+
+              });
+         	// filter binding
+         	var oList = this.byId("invoiceList");
+         	var oBinding = oList.getBinding("items");
+         	oBinding.filter(oFilter);
+        }
+    });
+
+});
