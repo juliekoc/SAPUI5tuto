@@ -5,6 +5,42 @@
             id="alertDialog"
             title="Invoices higher than 50 EUR">
             <content>
+                <Table
+                    id="highInvoices"
+                    stickyColumnHeader="true"
+                    rowClick="handleRowClick"
+                    mode="SingleSelect"
+                    selectionChange="handleSelectionChange"
+                    rows="{
+                        path: 'invoice>Invoices',
+                        sorter:{
+                            path: 'ProductName'
+                        }
+                    }">
+                    <columns>
+                        <TableColumn>
+                            <Label text="Product" />
+                        </TableColumn>
+                        <TableColumn>
+                            <Label text="Quantity" />
+                        </TableColumn>
+                        <TableColumn>
+                            <Label text="Price" />
+                        </TableColumn>
+                        <TableColumn>
+                            <Label text="Currency" />
+                        </TableColumn>
+                        <TableColumn>
+                            <Label text="ShipperName" />
+                        </TableColumn>
+                        <TableColumn>
+                            <Label text="ShippedDate" />
+                        </TableColumn>
+                        <TableColumn>
+                            <Label text="Status" />
+                        </TableColumn>
+                    </columns>
+                </Table>
             </content>
         <beginButton>
             <Button

@@ -6,11 +6,35 @@ sap.ui.define([
     "sap/ui/model/FilterOperator"
 ], function (Controller, Fragment, formatter, Filter, FilterOperator) {
 	"use strict";
+	var self;
 
 	return Controller.extend("sap.ui.demo.walkthrough.controller.InvoiceList", {
 		formatter: formatter,
-		onOpenAlert : function () {
 
+
+		/*onInit: function(){
+		    self = this;
+           let prices = [];
+           let invoicesModel = self.getView().byId("invoiceList").getModel().getData();
+           for(var i=0; invoicesModel.length; i++){
+               prices[i] = invoicesModel.get(i).ExtendedPrice;
+           }
+           let min = Math.min(prices);
+           let max = Math.max(prices);
+
+           let rangeSlide = self.getView().byId("rangeSlide");
+           rangeSlide.setRange([min, max]);
+           rangeSlide.setMin(min);
+           rangeSlide.setMax(max);
+
+           /*var oData = {RS:[min,max]};
+
+           var oModel =  new JSONModel(oData);
+           this.getView().setModel(oModel, "range");
+		},*/
+		onOpenAlert : function () {
+             //recuperer Dialog avec byId et rajouter le truc dans le content
+             //addContent en passant en param le nom de la table que je veux afficher
 			// create dialog lazily
 			if (!this.pDialog) {
 				this.pDialog = this.loadFragment({
@@ -20,6 +44,9 @@ sap.ui.define([
 			this.pDialog.then(function(oDialog) {
 				oDialog.open();
 			});
+
+			let myAlert = this.byId("alertDialog");
+			myAlert.addContent("alertTable");
 		},
 		onCloseAlert : function () {
         	// note: We don't need to chain to the pDialog promise, since this event-handler
@@ -32,9 +59,8 @@ sap.ui.define([
          			var aFilter = [];
          			var sQuery = oEvent.getParameter("query");
          			if (sQuery) {
-         				aFilter.push(new Filter("ProductName", FilterOperator.Contains, sQuery));
+         				aFilter.push(new Filter("Currency", FilterOperator.Contains, sQuery));
          			}
-
          			// filter binding
          			var oList = this.byId("invoiceList");
          			var oBinding = oList.getBinding("items");

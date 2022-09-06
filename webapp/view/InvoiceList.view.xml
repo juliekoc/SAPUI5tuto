@@ -22,7 +22,10 @@
 						icon="sap-icon://alert"
 						text="{i18n>openAlertButtonText}"
 						press=".onOpenAlert"
-						class="sapUiSmallMarginEnd"/>
+						class="sapUiSmallMarginEnd"
+						ariaHasPopup="Dialog"/>
+				<ToolbarSpacer/>
+				<RangeSlider id="rangeSlide" showAdvancedTooltip="true" enableTickmarks="true" class="sapUiMediumMarginBottom"/>
 				<ToolbarSpacer/>
 				<SearchField width="50%" search=".onFilterInvoices"/>
 			</Toolbar>
