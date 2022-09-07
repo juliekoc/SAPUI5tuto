@@ -36,8 +36,9 @@ sap.ui.define([
            for(var i=0; i<invoicesModel.Invoices.length; i++){
                prices[i] = invoicesModel.Invoices[i].ExtendedPrice;
            }
-           let min = Math.min(prices);
-           let max = Math.max(prices);
+
+           let min = Math.min.apply(Math, prices);
+           let max = Math.max.apply(Math, prices);
            let rangeSlide = self.getView().byId("rangeSlide");
            rangeSlide.setRange([min, max]);
            rangeSlide.setStep(5);
@@ -45,14 +46,36 @@ sap.ui.define([
            rangeSlide.setMax(max);
 		},
 
+		onSliderChange: function(){
+		    let slider = this.getView().byId("rangeSlide").mProperties; //ou .mProperties
+		    let minValue = slider.value;
+		    let maxValue = slider.value2;
+		    /*let model = this.getView().getModel("invoice").getData();
+		    let filterModel = model.Invoices.filter(x => x.ExtendedPrice >= minValue && x.ExtendedPrice <= maxValue);
+		    this.getView.setModel(new JSONModel(filterModel), "sliderModel");*/
+
+            var oFilter = new sap.ui.model.Filter({
+
+            filters: [
+
+                 new sap.ui.model.Filter("ExtendedPrice", FilterOperator.BT, minValue, maxValue),
+
+
+                 ],
+                 and: false
+
+            });
+                     	// filter binding
+            var oList = this.byId("invoiceList");
+            var oBinding = oList.getBinding("items");
+            oBinding.filter(oFilter);
+
+		},
+
 		_onRouteMatched: function(){
 
 		},
 
-        /*onInit: function () {
-        	var oModel = new JSONModel("invoice");
-        	this.getView().setModel(oModel);
-        },*/
 		onOpenAlert : function () {
 
              let model = this.getView().getModel("invoice").getData();
@@ -72,20 +95,6 @@ sap.ui.define([
              	this.oDefaultDialog = new Dialog({
              		title: "Invoices higher than 50 EUR",
              		content: list,
-
-//                    content: new Table({
-//                             items: {
-//                                  path: 'invoice>/Invoices',
-//                                  parameters : {
-//                                 		  $filter : 'invoice>ExtendedPrice gt 50',
-//                                 		  $select : 'invoice>Quantity, invoice>ProductName, invoice>ExtendedPrice, invoice>Currency'
-//                                  },
-//                                  template: new ColumnListItem({
-//                                            cells: "invoice>ProductName",
-//                                            cells: "invoice>ExtendedPrice"
-//                                  })
-//                             }
-//                    }),
              					beginButton: new Button({
              						type: ButtonType.Emphasized,
              						text: "OK",

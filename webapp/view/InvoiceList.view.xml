@@ -25,7 +25,7 @@
 						class="sapUiSmallMarginEnd"
 						ariaHasPopup="Dialog"/>
 				<ToolbarSpacer/>
-				<RangeSlider id="rangeSlide" showAdvancedTooltip="true" enableTickmarks="true" class="sapUiMediumMarginBottom"/>
+				<RangeSlider id="rangeSlide" showAdvancedTooltip="true" enableTickmarks="true" class="sapUiMediumMarginBottom" change=".onSliderChange"/>
 				<ToolbarSpacer/>
 				<SearchField width="50%" search=".onFilterInvoices"/>
 			</Toolbar>
