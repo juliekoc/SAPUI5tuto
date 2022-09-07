@@ -10,7 +10,7 @@ sap.ui.define([
     "sap/m/StandardListItem",
     "sap/m/Text",
     "sap/m/Table",
-    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/json/JSONModel"
 ], function (Controller, formatter, Filter, FilterOperator, Dialog, Button, mobileLibrary, List, StandardListItem, Text, Table, JSONModel) {
 	"use strict";
 	var self;

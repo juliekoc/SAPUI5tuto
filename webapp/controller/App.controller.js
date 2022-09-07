@@ -1,8 +1,18 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/m/Carousel"
-], function (Controller, Carousel) {
+	"sap/m/Carousel",
+	"sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/library",
+    "sap/ui/model/json/JSONModel"
+], function (Controller, Carousel, Dialog, Button, mobileLibrary, JSONModel) {
 	"use strict";
+	var self;
+	// shortcut for sap.m.ButtonType
+    var ButtonType = mobileLibrary.ButtonType;
+
+    // shortcut for sap.m.DialogType
+    var DialogType = mobileLibrary.DialogType;
 
 	return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
 
@@ -15,7 +25,7 @@ sap.ui.define([
 	    if (!this.oDefaultDialog) {
             this.oDefaultDialog = new Dialog({
                  title: "Invoices higher than 50 EUR",
-                 content: "carousel",
+                 //content: "carousel",
                           beginButton: new Button({
                      				type: ButtonType.Emphasized,
                      				text: "OK",
