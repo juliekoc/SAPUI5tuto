@@ -38,7 +38,7 @@ sap.ui.define([
            }
 
            let min = Math.min.apply(Math, prices);
-           let max = Math.max.apply(Math, prices);
+           let max = Math.max.apply(Math, prices) + 2;
            let rangeSlide = self.getView().byId("rangeSlide");
            rangeSlide.setRange([min, max]);
            rangeSlide.setStep(5);
@@ -50,9 +50,6 @@ sap.ui.define([
 		    let slider = this.getView().byId("rangeSlide").mProperties; //ou .mProperties
 		    let minValue = slider.value;
 		    let maxValue = slider.value2;
-		    /*let model = this.getView().getModel("invoice").getData();
-		    let filterModel = model.Invoices.filter(x => x.ExtendedPrice >= minValue && x.ExtendedPrice <= maxValue);
-		    this.getView.setModel(new JSONModel(filterModel), "sliderModel");*/
 
             var oFilter = new sap.ui.model.Filter({
 
@@ -65,7 +62,8 @@ sap.ui.define([
                  and: false
 
             });
-                     	// filter binding
+
+            // filter binding
             var oList = this.byId("invoiceList");
             var oBinding = oList.getBinding("items");
             oBinding.filter(oFilter);

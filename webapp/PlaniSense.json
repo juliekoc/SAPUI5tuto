@@ -1,0 +1,76 @@
+{
+  "PlaniSense": [
+    {
+      "FirstName": "Nazim",
+      "LastName": "Nachi",
+      "Age": "35",
+      "Job": "CEO",
+      "Passion": "Recruter des gens rigolo",
+      "Sign": "Pisces"
+    },
+    {
+      "FirstName": "Chloe",
+      "LastName": "De Pierrepont",
+      "Age": "24",
+      "Job": "Chef de Projet",
+      "Passion": "Café au beurre de cacahuètes",
+      "Sign": "Leo"
+    },
+    {
+      "FirstName": "Guillame",
+      "LastName": "Loriod",
+      "Job": "CTO",
+      "Age": "26",
+      "Passion": "Afterwork manicure",
+      "Sign": "Sagittarius"
+    },
+    {
+      "FirstName": "Benjamin",
+      "LastName": "Conquet",
+      "Job": "Chef de Projet",
+      "Age": "24",
+      "Passion": "Ski",
+      "Sign": "Jsp"
+    },
+    {
+      "FirstName": "Julie",
+      "LastName": "Kocianova",
+      "Job": "Stagiaire",
+      "Age": "23",
+      "Passion": "Escalade",
+      "Sign": "Cancer"
+    },
+    {
+      "FirstName": "Nicolas",
+      "LastName": "La Palombara",
+      "Job": "R&D",
+      "Age": "25",
+      "Passion": "Ringhio",
+      "Sign": "J'ai oublié"
+    },
+    {
+      "FirstName": "Nina",
+      "LastName": "Germain",
+      "Job": "Marketing",
+      "Age": "20",
+      "Passion": "faire connaissance",
+      "Sign": "un truc que les gens n'aime pas d'habitude"
+    },
+    {
+      "FirstName": "Loreena",
+      "LastName": "Liotard",
+      "Job": "Tech",
+      "Age": "25",
+      "Passion": "Dessin",
+      "Sign": "not disclosed"
+    },
+    {
+      "FirstName": "Chaoki",
+      "LastName": "Boukemia",
+      "Job": "SDR",
+      "Age": "28",
+      "Passion": "La bonne santé",
+      "Sign": "not disclosed"
+    }
+  ]
+}
