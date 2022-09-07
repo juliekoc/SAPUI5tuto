@@ -8,10 +8,12 @@ sap.ui.define([
     "sap/m/library",
     "sap/m/List",
     "sap/m/StandardListItem",
-    "sap/m/Text"
-], function (Controller, formatter, Filter, FilterOperator, Dialog, Button, mobileLibrary, List, StandardListItem, Text) {
+    "sap/m/Text",
+    "sap/m/Table",
+    "sap/ui/model/json/JSONModel",
+], function (Controller, formatter, Filter, FilterOperator, Dialog, Button, mobileLibrary, List, StandardListItem, Text, Table, JSONModel) {
 	"use strict";
-	//var self;
+	var self;
 
 	// shortcut for sap.m.ButtonType
     var ButtonType = mobileLibrary.ButtonType;
@@ -23,51 +25,67 @@ sap.ui.define([
 		formatter: formatter,
 
 
-		/*onInit: function(){
+		onInit: function(){
 		    self = this;
+           let invoicesModel = jQuery.sap.sjax({
+                                    url: sap.ui.require.toUrl("sap/ui/demo/walkthrough/mockdata") + "/Invoices.json",
+                                    dataType: "json",
+                               }).data;
            let prices = [];
-           let invoicesModel = self.getView().byId("invoiceList").getModel().getData();
-           for(var i=0; invoicesModel.length; i++){
-               prices[i] = invoicesModel.get(i).ExtendedPrice;
+
+           for(var i=0; i<invoicesModel.Invoices.length; i++){
+               prices[i] = invoicesModel.Invoices[i].ExtendedPrice;
            }
            let min = Math.min(prices);
            let max = Math.max(prices);
-
            let rangeSlide = self.getView().byId("rangeSlide");
            rangeSlide.setRange([min, max]);
+           rangeSlide.setStep(5);
            rangeSlide.setMin(min);
            rangeSlide.setMax(max);
+		},
 
-           /*var oData = {RS:[min,max]};
+		_onRouteMatched: function(){
 
-           var oModel =  new JSONModel(oData);
-           this.getView().setModel(oModel, "range");
-		},*/
+		},
 
         /*onInit: function () {
         	var oModel = new JSONModel("invoice");
         	this.getView().setModel(oModel);
         },*/
 		onOpenAlert : function () {
+
+             let model = this.getView().getModel("invoice").getData();
+             let filterModel = model.Invoices.filter(x => x.ExtendedPrice >= 50);
+             let list = new List({
+                                     				items: {
+                                     					path: "/",
+                                                        templateShareable:false,
+                                     					template: new StandardListItem({
+                                     							title: "{Quantity} x {ProductName}",
+                                     							info: "{ExtendedPrice} {Currency}",
+                                     							}),
+                                     						}
+                                     					});
+            list.setModel(new JSONModel(filterModel));
              if (!this.oDefaultDialog) {
              	this.oDefaultDialog = new Dialog({
              		title: "Invoices higher than 50 EUR",
-             		content: new List({
-             				items: {
-             					path: 'invoice>/Invoices',
-                                formatter: function (value) {
-                                      value : "{invoice>ExtendedPrice}";
-                                      if (value>50) {
-                                          return true;
-                                      }
-                                          return false;
-                                },
-             					template: new StandardListItem({
-             							title: "{invoice>Quantity} x {invoice>ProductName}",
-             							info: "{invoice>ExtendedPrice} {invoice>Currency}",
-             							})
-             						}
-             					}),
+             		content: list,
+
+//                    content: new Table({
+//                             items: {
+//                                  path: 'invoice>/Invoices',
+//                                  parameters : {
+//                                 		  $filter : 'invoice>ExtendedPrice gt 50',
+//                                 		  $select : 'invoice>Quantity, invoice>ProductName, invoice>ExtendedPrice, invoice>Currency'
+//                                  },
+//                                  template: new ColumnListItem({
+//                                            cells: "invoice>ProductName",
+//                                            cells: "invoice>ExtendedPrice"
+//                                  })
+//                             }
+//                    }),
              					beginButton: new Button({
              						type: ButtonType.Emphasized,
              						text: "OK",
