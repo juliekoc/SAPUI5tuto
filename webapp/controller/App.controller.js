@@ -4,8 +4,11 @@ sap.ui.define([
 	"sap/m/Dialog",
     "sap/m/Button",
     "sap/m/library",
-    "sap/ui/model/json/JSONModel"
-], function (Controller, Carousel, Dialog, Button, mobileLibrary, JSONModel) {
+    "sap/ui/model/json/JSONModel",
+    "sap/m/List",
+    "sap/m/StandardListItem",
+    "sap/m/Page"
+], function (Controller, Carousel, Dialog, Button, mobileLibrary, JSONModel, List, StandardListItem, Page) {
 	"use strict";
 	var self;
 	// shortcut for sap.m.ButtonType
@@ -19,13 +22,29 @@ sap.ui.define([
 	onOpenCarousel : function () {
 
 	    let model = this.getView().getModel("planisense").getData();
-	    /*let carousel = new Carousel({
-	    });*/
+	    const listArray = [];
+	    for(let i = 0; i<model.PlaniSense.length;i++){
+	     const personn = model.PlaniSense[i];
+	     let list = new List({});
+	     let item =  new StandardListItem({
+	        title: personn.FirstName+" "+ personn.LastName,
+            info: "sign: "+personn.Sign+" job:"+personn.Job
+         });
+         list.addItem(item);
+         listArray.push(list);
+	    }
+	    let carousel = new Carousel({
+	        loop : true,
+	        pages : listArray
+	    });
+	    //let page = new Table({})
+	    //carousel.setModel(new JSONModel(model.PlaniSense));
 
 	    if (!this.oDefaultDialog) {
             this.oDefaultDialog = new Dialog({
-                 title: "Invoices higher than 50 EUR",
-                 //content: "carousel",
+                 title: "PlaniSense Carousel",
+                 resizable: true,
+                 content: carousel,
                           beginButton: new Button({
                      				type: ButtonType.Emphasized,
                      				text: "OK",
